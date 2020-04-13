@@ -2,30 +2,16 @@ import random
 
 from flask import Flask, request, jsonify
 
+import gerador
+
 
 app = Flask(__name__)
 
 @app.route("/gera_numero")
 
-def gera_numero():
+def gera_numero1():
     
-    i = 0
-    
-    L = []
-    
-    while i < 4:
-
-        x = random.randrange(10)
-        
-        while x not in L:
-            
-            L.append(x)
-            
-            i = i + 1
-    
-    a = str(str(L[0]) + str(L[1]) + str(L[2]) + str(L[3]))
-    
-    return a
+	return gerador.gera_numero()
 
 @app.route("/inicia")
 
@@ -33,7 +19,7 @@ def inicia():
 
 	arquivo = open("numero.txt", "w")
 
-    	arquivo.write(gera_numero())
+    	arquivo.write(gera_numero1())
 
     	arquivo.close
 	
@@ -57,32 +43,40 @@ def comparador():
 
 	lista = list(a)
 
-	while i < len(lista):
+	if len(b) == 4:
 
-		if b[i] in lista:
+		while i < len(lista):
 
-			if b[i] == lista[i]:
+			if b[i] in lista:
 
-				L.append("1")
+				if b[i] == lista[i]:
+
+					L.append("1")
 			
-				i = i + 1
+					i = i + 1
 
+				else:
+
+					L.append("0")
+
+					i = i + 1
 			else:
 
-				L.append("0")
-
 				i = i + 1
-		else:
-
-			i = i + 1
 		
-	x = ""
+		x = ""
 
-	resultado = x.join(L)	
+		resultado = x.join(L)	
 	
-	return jsonify({"Status": resultado})
+		return jsonify({"Status": resultado})
+
+	else:
+
+		return "O numero deve ter 4 digitos"
 
 		
 if __name__ == "__main__":
     app.run(port = 8090)
+
+
 
