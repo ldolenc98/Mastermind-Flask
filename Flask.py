@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify
 
 import gerador
 
+import pymongo
+
 
 app = Flask(__name__)
 
